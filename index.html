@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="./StyleSheet.css" rel="StyleSheet">
+  <script defer src="./app.js"></script>
+  <title>Aim Trainer</title>
+</head>
+<body>
+  <div id="main">
+    <h1>Aim Practice</h1>
+    <form action="" id="form">
+      <div class="formGroup">
+        <label for="amount">Number Of Clicks: <span id="clickText">10</span></label>
+        <input type="range" min="1" max="25" value="10" id="amount">
+      </div>
+      <div class="formGroup">
+        <label for="sizeChange">Size Of Target: <span id="sizeText">50</span>px</label>
+        <input type="range" min="10" max="200" value="50" id="sizeChange">
+      </div>
+      <div id="target"></div>
+      <input type="submit" onclick="submitForm(event)">
+    </form>
+  </div>
+</body>
+</html>
