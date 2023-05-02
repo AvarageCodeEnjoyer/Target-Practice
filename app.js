@@ -1,6 +1,8 @@
 const startBtn = document.getElementById('start')
 const amount = document.getElementById('amount')
 const size = document.getElementById('sizeChange')
+const sizeText = document.getElementById('sizeText')
+const clickText = document.getElementById('clickText')
 const form = document.getElementById('form')
 const main = document.getElementById('main')
 
@@ -59,10 +61,10 @@ let submitForm = e => {
   timeInterval = setInterval(updateTimer, 10); // Update every 10 milliseconds
 }
 
-function changeTarget() {
-  let sizeNum = parseInt(size.value)
-  target.style.width = `${sizeNum}px`
-  target.style.height = `${sizeNum}px`
+function changeCSS(element, sizeNum) {
+  sizeNum = parseInt(sizeNum)
+  element.style.width = `${sizeNum}px`
+  element.style.height = `${sizeNum}px`
 }
 
 let missEvent = () => {
@@ -74,10 +76,16 @@ function randomPos() {
   return Math.floor(Math.random() * 97)
 }
 
-size.addEventListener('input', e => {
+// Change size nd text of form input for size of target
+let sizeChange = e => {
   e.preventDefault()
-  size.style.content = e.target.value
-  changeTarget()
+  sizeText.innerText = e.target.value
+  changeCSS(target, e.target.value)
+}
+
+amount.addEventListener('input', e => {
+  e.preventDefault()
+  clickText.innerText = e.target.value
 })
 
 let updateTimer = () => {
@@ -96,19 +104,19 @@ function pad(value) {
 function retry() {
   reset()
   main.innerHTML = `
-  <h1>Aim Practice</h1>
-  <form action="" id="form">
-    <div class="formGroup">
-      <label for="amount">Number Of Clicks</label>
-      <input type="range" min="1" max="25" value="10" id="amount">
-    </div>
-    <div class="formGroup">
-      <label for="sizeChange">Size Of Target</label>
-      <input type="range" min="10" max="200" value="50" id="sizeChange">
-    </div>
-    <div id="target"></div>
-    <input type="submit" onclick="submitForm(event)">
-  </form>`
+    <h1>Aim Practice</h1>
+    <form action="" id="form">
+      <div class="formGroup">
+        <label for="amount">Number Of Clicks: <span id="clickText">10</span></label>
+        <input type="range" min="1" max="25" value="${amount.value}" id="amount">
+      </div>
+      <div class="formGroup">
+        <label for="sizeChange">Size Of Target: <span id="sizeText">50</span>px</label>
+        <input type="range" min="10" max="200" value="50" id="sizeChange">
+      </div>
+      <div id="target"></div>
+      <input type="submit" onclick="submitForm(event)">
+    </form>`
   const sizeText = document.getElementById('sizeText')
   const clickText = document.getElementById('clickText')
 }
@@ -117,4 +125,5 @@ function reset() {
   retryBtn.style.opacity = "0"
   targetClick = -1
   missClick = 0
+  size.addEventListener('input', sizeChange)
 }
