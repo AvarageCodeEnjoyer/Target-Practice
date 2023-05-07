@@ -27,8 +27,7 @@ form {
   box-sizing: border-box;
   padding: 20px;
   width: 500px;
-  height: clamp(200px, 300px, 400px);
-  height: fit-content;
+  height: auto;
   z-index: 3;
 }
 

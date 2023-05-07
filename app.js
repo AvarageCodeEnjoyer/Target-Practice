@@ -13,6 +13,7 @@ let timerElement
 let startTime
 let targetClick = -1
 let missClick = 0
+let tarSize
 let target = document.getElementById('target')
 
 let targetEvent = e => {
@@ -40,17 +41,17 @@ let submitForm = e => {
       <button id="retry">Retry?</button>
       <p id="hitText">0</p>
     </div>
-    <div id="wrap">
-      <div id="target"></div>
-    </div>
+    <div id="wrap"></div>
   `
   main.innerHTML = newContent
   const wrap = document.getElementById('wrap')
+  wrap.innerHTML = `<div id="target"></div>`
+  target = document.getElementById('target')
   const missText = document.getElementById('missText')
   const hitText = document.getElementById('hitText')
   retryBtn = document.getElementById('retry')
-
-  target = document.getElementById('target')
+  target.style.width = `${tarSize}px`
+  target.style.height = `${tarSize}px`
   target.style.position = "absolute"
   target.addEventListener('click', targetEvent)
   wrap.addEventListener('click', missEvent)
@@ -62,10 +63,13 @@ let submitForm = e => {
 }
 
 function changeCSS(element, sizeNum) {
-  sizeNum = parseInt(sizeNum)
-  element.style.width = `${sizeNum}px`
-  element.style.height = `${sizeNum}px`
+  if (!isNaN(sizeNum)) {
+    sizeNum = parseInt(sizeNum)
+    element.style.width = `${sizeNum}px`
+    element.style.height = `${sizeNum}px`
+  }
 }
+
 
 let missEvent = () => {
   missClick++
@@ -77,15 +81,22 @@ function randomPos() {
 }
 
 // Change size nd text of form input for size of target
-let sizeChange = e => {
+let changeSize = e => {
   e.preventDefault()
   sizeText.innerText = e.target.value
   changeCSS(target, e.target.value)
+  tarSize = sizeChange.value
 }
 
 amount.addEventListener('input', e => {
   e.preventDefault()
   clickText.innerText = e.target.value
+})
+
+size.addEventListener('input', e => {
+  e.preventDefault()
+  sizeText.innerText = e.target.value
+  changeCSS(target, e.target.value)
 })
 
 let updateTimer = () => {
@@ -125,5 +136,5 @@ function reset() {
   retryBtn.style.opacity = "0"
   targetClick = -1
   missClick = 0
-  size.addEventListener('input', sizeChange)
+  size.addEventListener('input', changeSize)
 }
